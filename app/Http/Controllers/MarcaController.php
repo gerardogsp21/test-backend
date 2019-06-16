@@ -116,7 +116,6 @@ class MarcaController extends Controller
             $productos_relacionados = Producto::where('marca_id', $id)->get();
 
             if (count($productos_relacionados) > 0) {
-                $respuesta["status"] = true;
                 $respuesta["msg"] = "La marca esta siendo usada por varios productos.";
                 $respuesta["productos_relacionados"] = $productos_relacionados;
             } else {            
