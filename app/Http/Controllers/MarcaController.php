@@ -11,6 +11,14 @@ use App\Models\Producto;
 
 class MarcaController extends Controller
 {   
+    public function listar(Request $requets) {
+       $marca = Marca::paginate(5);
+        return response()->json([
+            'status' => true,
+            'data' => $marca
+        ]);
+    }
+
     public function index(Request $requets) {
        $marca = Marca::get();
         return response()->json([
@@ -80,7 +88,7 @@ class MarcaController extends Controller
 
         if ($validator->fails()) {
             $respuesta["msg"] = 'Verificar los campos de informacion';
-            $respuesta["data"] = $validator->errors();
+            $respuesta["validator"] = $validator->errors();
         } else {
             $marca = Marca::find($id);
             $marca->fill($datos_recibidos);
@@ -123,8 +131,7 @@ class MarcaController extends Controller
             }      
         } else {
             $respuesta["msg"] = 'No se encontro el registro que intenta eliminar.';
-        }          
-       
+        }                 
         return response()->json($respuesta);
     }
 }

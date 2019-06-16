@@ -19,7 +19,7 @@ class Producto extends Model
         "fecha_embarque"
      ];
 
-     public function productos() {
+     public function marca() {
         return $this->belongsTo('App\Models\Marca', 'marca_id');
     }
 }

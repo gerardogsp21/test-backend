@@ -18,5 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::get('marcas/listar/paginado','MarcaController@listar');
 Route::resource('marcas','MarcaController');
+
+Route::get('productos/listar/paginado','ProductoController@listar');
 Route::resource('productos','ProductoController');

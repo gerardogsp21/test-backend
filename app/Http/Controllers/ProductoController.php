@@ -9,8 +9,16 @@ use App\Models\Producto;
 
 class ProductoController extends Controller
 {
+    public function listar(Request $requets) {
+       $producto = Producto::with('marca')->paginate(5);
+        return response()->json([
+            'status' => true,
+            'data' => $producto
+        ]);
+    }
+
     public function index(Request $requets) {
-       $producto = Producto::get();
+       $producto = Producto::with('marca')->get();
         return response()->json([
             'status' => true,
             'data' => $producto
@@ -18,7 +26,7 @@ class ProductoController extends Controller
     }
 
     public function show($id) {
-       $producto = Producto::find($id);
+       $producto = Producto::with('marca')->where('id', $id)->first();
         return response()->json([
             'status' => true,
             'data' => $producto
@@ -102,7 +110,7 @@ class ProductoController extends Controller
 
         if ($validator->fails()) {
             $respuesta["msg"] = 'Verificar los campos de informacion';
-            $respuesta["data"] = $validator->errors();
+            $respuesta["validator"] = $validator->errors();
         } else {
             $producto = Producto::find($id);
             $producto->fill($datos_recibidos);
